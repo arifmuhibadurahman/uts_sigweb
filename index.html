@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaflet Web Map</title>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" />
+	<script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"></script>
+	
+	<!-- memanggil bootstrap -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+	<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+	
+	<script src="./bundle.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="./Leaflet.GraphicScale.min.css">
+	
+	<script src="./Leaflet.GraphicScale.min.js"></script>
+	
+	<!-- Leaflet.draw -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+
+	
+	<style>
+	#map {
+		height: calc(100vh - 60px);
+	}
+	</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Home</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+		<li class="nav-item">
+			<a class="nav-link" href="1.html">Esai Praktikum</a>
+		  </li>		  
+     
+    </ul>
+
+
+	<ul class="navbar-nav mr-auto">
+		<li class="nav-item">
+			<a class="nav-link" href="4.html">Link Redirrect</a>
+		  </li>		  
+     
+    </ul>
+
+
+	<ul class="navbar-nav mr-auto">
+		<li class="nav-item">
+			<a class="nav-link" href="5.html">Miring Tebal</a>
+		  </li>		  
+     
+    </ul>
+
+	<ul class="navbar-nav mr-auto">
+		<li class="nav-item">
+			<a class="nav-link" href="6.html">2 Warna</a>
+		  </li>		  
+     
+    </ul>
+
+	<ul class="navbar-nav mr-auto">
+		<li class="nav-item">
+			<a class="nav-link" href="7.html">Tabel Nim dan nama</a>
+		  </li>		  
+     
+    </ul>
+
+	<ul class="navbar-nav mr-auto">
+		<li class="nav-item">
+			<a class="nav-link" href="8.html">Formulir password</a>
+		  </li>		  
+     
+    </ul>
+
+	<ul class="navbar-nav mr-auto">
+		<li class="nav-item">
+			<a class="nav-link" href="10.html">Landing Page</a>
+		  </li>		  
+     
+    </ul>
+
+    <form class="form-inline my-2 my-lg-0">
+      <button 
+	    class="btn btn-outline-success my-2 my-sm-0" 
+		onclick="cari()"
+		>
+		   Lokasi saya
+	  </button>
+    </form>
+  </div>
+</nav>
+	<!-- container peta -->
+	<div id="map"></div>
+	
+	<!-- script peta -->
+	<script src="jogja.js"></script>
+    <script>
+	var map = L.map('map',{
+        center: [-7.79558, 110.36949],
+        zoom: 15
+        });
+		
+	var esri = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+	}).addTo(map);
+	
+	var carto = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}{r}.png', {
+	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+	subdomains: 'abcd',
+	maxZoom: 19
+	});
+	
+	
+	var teknik = L.marker([-7.765205977847705, 110.37250852152583]).bindPopup('Fakultas Teknik '),
+		geografi    = L.marker([-7.766143203539702, 110.37756595937346]).bindPopup('Fakultas Goegrafi'),
+		mipa    = L.marker([-7.76706110161013, 110.37619968589541]).bindPopup('Fakultas Mipa'),
+		vokasi    = L.marker([-7.773935462163157, 110.37243449622935]).bindPopup('Fakultas vokasi'),
+        farmasi    = L.marker([-7.769180288760793, 110.37627804304704]).bindPopup('Fakultas Farmasi');
+
+	var jogja = L.layerGroup([teknik, mipa, vokasi, geografi, farmasi]);
+	
+	
+	var baseMaps = {
+		"Citra Satelit": esri,
+		"Peta Carto": carto
+	};
+	
+	var overlayMaps = {
+		"Fakultas": jogja
+	};
+	
+	L.control.layers(baseMaps, overlayMaps).addTo(map);
+	
+	
+	L.Control.geocoder().addTo(map);
+	
+	L.easyPrint({
+		title: 'My awesome print button',
+		position: 'topright',
+		sizeModes: ['A4Portrait', 'A4Landscape']
+	}).addTo(map);
+	
+	
+	var graphicScale = L.control.graphicScale({
+		fill: "fill",
+		doubleLine: "true",
+		showSubunits: "true"
+	}).addTo(map);
+	
+	// Layer untuk gambar hasil pengguna
+	var drawnItems = new L.FeatureGroup();
+	map.addLayer(drawnItems);
+
+	// Kontrol gambar
+	var drawControl = new L.Control.Draw({
+		edit: {
+			featureGroup: drawnItems
+		},
+		draw: {
+			polygon: true,
+			polyline: false,
+			rectangle: false,
+			circle: false,
+			marker: false,
+			circlemarker: false
+		}
+	});
+	map.addControl(drawControl);
+
+
+		map.on(L.Draw.Event.CREATED, function (event) {
+		var layer = event.layer;
+		drawnItems.addLayer(layer);
+
+		// (Opsional) tampilkan GeoJSON di console
+		console.log(JSON.stringify(layer.toGeoJSON()));
+	});
+
+
+	// ------------------------------------------------------------------
+	// ini latian hari 2 leaflet
+	
+	function cari(){
+		alert('please activate your gps!');
+		map.locate({setView: true, maxZoom: 16});
+		
+		function onLocationFound(e) {
+			var radius = e.accuracy / 2;
+
+			L.marker(e.latlng).addTo(map)
+				.bindPopup("You are within " + radius + " meters from this point").openPopup();
+
+			L.circle(e.latlng, radius).addTo(map);
+		}
+
+		map.on('locationfound', onLocationFound);
+		
+	}
+
+    </script>
+</body>
+</html>
+
+
